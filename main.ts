@@ -91,11 +91,11 @@ basic.forever(function () {
             ball.set(LedSpriteProperty.Blink, 1)
             basic.pause(2000)
             basic.showLeds(`
-                . # # # .
-                . # . . .
-                . # # # .
-                . # . . .
-                . # . . .
+                # . . . #
+                . # . # .
+                . . # . .
+                . # . # .
+                # . . . #
                 `)
             basic.showString("Score: ")
             basic.showString("" + (score))
