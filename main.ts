@@ -85,7 +85,6 @@ basic.forever(function () {
             directionY = 1
             directionX = randint(-1, 1)
         } else if (ball.get(LedSpriteProperty.Y) >= 4) {
-            hits += 1
             game_over += 1
             music.startMelody(music.builtInMelody(Melodies.Funeral), MelodyOptions.Once)
             ball.set(LedSpriteProperty.Blink, 1)
