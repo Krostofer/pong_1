@@ -1,32 +1,17 @@
 input.onButtonPressed(Button.A, function () {
-    if (game_start == 2) {
-        if (paddleA.get(LedSpriteProperty.X) > 0) {
-            paddleA.change(LedSpriteProperty.X, -1)
-        }
-    }
-    if (game_start == 1) {
-        if (paddleA.get(LedSpriteProperty.X) > 0) {
-            paddleA.change(LedSpriteProperty.X, -1)
-            paddleB.change(LedSpriteProperty.X, -1)
-        }
+    if (paddleA.get(LedSpriteProperty.X) > 0) {
+        paddleA.change(LedSpriteProperty.X, -1)
+        paddleB.change(LedSpriteProperty.X, -1)
     }
 })
 input.onButtonPressed(Button.AB, function () {
     game_start = 1
 })
 input.onButtonPressed(Button.B, function () {
-    if (game_start == 2) {
+    if (paddleA.get(LedSpriteProperty.X) < 3) {
         paddleA.change(LedSpriteProperty.X, 1)
+        paddleB.change(LedSpriteProperty.X, 1)
     }
-    if (game_start == 1) {
-        if (paddleA.get(LedSpriteProperty.X) < 3) {
-            paddleA.change(LedSpriteProperty.X, 1)
-            paddleB.change(LedSpriteProperty.X, 1)
-        }
-    }
-})
-input.onGesture(Gesture.Shake, function () {
-    game_start = 2
 })
 let game_over = 0
 let paddle_hit = 0
@@ -78,59 +63,6 @@ if (game_start == 1) {
 }
 basic.forever(function () {
     if (game_start == 1) {
-        ball.change(LedSpriteProperty.X, directionX)
-        ball.change(LedSpriteProperty.Y, directionY)
-        if (ball.isTouching(paddleA) || ball.isTouching(paddleB)) {
-            hits += 1
-            music.playTone(262, music.beat(BeatFraction.Whole))
-            score += 1
-            basic.showString("" + (score))
-            ball.change(LedSpriteProperty.X, directionX * -1)
-            ball.change(LedSpriteProperty.Y, -1)
-            directionY = -1
-            directionX = randint(-1, 1)
-            paddle_hit += -1
-        } else {
-            if (ball.get(LedSpriteProperty.Y) <= 0) {
-                hits += 1
-                music.playTone(220, music.beat(BeatFraction.Whole))
-                directionY = 1
-                directionX = randint(-1, 1)
-            } else if (ball.get(LedSpriteProperty.Y) >= 4) {
-                hits += 1
-                game_over += 1
-                music.startMelody(music.builtInMelody(Melodies.Funeral), MelodyOptions.Once)
-                ball.set(LedSpriteProperty.Blink, 1)
-                basic.pause(2000)
-                basic.showLeds(`
-                    . # # # .
-                    . # . . .
-                    . # # # .
-                    . # . . .
-                    . # . . .
-                    `)
-                basic.showString("Score: ")
-                basic.showString("" + (score))
-                basic.showString("Total bounces :")
-                basic.showString("" + (hits))
-                basic.pause(500)
-                control.reset()
-            }
-            if (ball.get(LedSpriteProperty.X) <= 0) {
-                hits += 1
-                music.playTone(330, music.beat(BeatFraction.Whole))
-                directionX = 1
-            } else if (ball.get(LedSpriteProperty.X) >= 4) {
-                hits += 1
-                music.playTone(330, music.beat(BeatFraction.Whole))
-                directionX = -1
-            }
-            basic.pause(500)
-        }
-    }
-})
-basic.forever(function () {
-    if (game_start == 2) {
         ball.change(LedSpriteProperty.X, directionX)
         ball.change(LedSpriteProperty.Y, directionY)
         if (ball.isTouching(paddleA) || ball.isTouching(paddleB)) {
